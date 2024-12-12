@@ -1,0 +1,9 @@
+node_modules/
+__pycache__/
+.next/
+.storage/
+models/
+*.sav
+*.joblib
+*.csv
+*.tmp
