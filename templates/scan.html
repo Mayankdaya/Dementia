@@ -192,6 +192,20 @@ This is a screening tool. Always consult with a healthcare professional for a co
                             >
                         </div>
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">CDR</label>
+                            <select 
+                                id="cdr" 
+                                class="w-full neumorphic-input p-3"
+                                onchange="checkFormFields()"
+                            >
+                                <option value="0">0</option>
+                                <option value="0.5">0.5</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">APOE4 Genotype</label>
                             <select 
                                 id="apoe4" 
@@ -237,81 +251,102 @@ This is a screening tool. Always consult with a healthcare professional for a co
 
     <script>
         function infer() {
-            var gen = document.getElementById("gender").value === "Male" ? 1 : 0;
-            var age = parseFloat(document.getElementById("age").value);
-            var educ = parseFloat(document.getElementById("educ").value);
-            var ses = parseFloat(document.getElementById("ses").value);
-            var mmse = parseFloat(document.getElementById("mmse").value);
-            var etiv = parseFloat(document.getElementById("etiv").value);
-            var nwbv = parseFloat(document.getElementById("nwbv").value);
-            var asf = parseFloat(document.getElementById("asf").value);
-            var apoe4 = parseFloat(document.getElementById("apoe4").value);
-            var familyHistory = parseFloat(document.getElementById("familyHistory").value);
+    var gen = document.getElementById("gender").value === "Male" ? 1 : 0;
+    var age = parseFloat(document.getElementById("age").value);
+    var educ = parseFloat(document.getElementById("educ").value);
+    var ses = parseFloat(document.getElementById("ses").value);
+    var mmse = parseFloat(document.getElementById("mmse").value);
+    var etiv = parseFloat(document.getElementById("etiv").value);
+    var nwbv = parseFloat(document.getElementById("nwbv").value);
+    var asf = parseFloat(document.getElementById("asf").value);
+    var apoe4 = parseFloat(document.getElementById("apoe4").value);
+    var familyHistory = parseFloat(document.getElementById("familyHistory").value);
+    var cdr = parseFloat(document.getElementById("cdr").value);
 
-            const data = {
-                gender: gen,
-                age: age,
-                educ: educ,
-                ses: ses,
-                mmse: mmse,
-                etiv: etiv,
-                nwbv: nwbv,
-                asf: asf,
-                apoe4: apoe4,
-                familyHistory: familyHistory
-            };
+    const data = {
+        gender: gen,
+        age: age,
+        educ: educ,
+        ses: ses,
+        mmse: mmse,
+        etiv: etiv,
+        nwbv: nwbv,
+        asf: asf,
+        apoe4: apoe4,
+        familyHistory: familyHistory,
+        cdr: cdr
+    };
 
-            // Simulated API call (replace with actual endpoint)
-            fetch('/predict', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                var resultDiv = document.getElementById("result");
-                var output = data.prediction === 1 ? 
-                    `<div class='bg-red-100 border-l-4 border-red-500 p-4'>
-                        <p class='text-red-700 font-bold'>Potential Dementia Risk Detected</p>
-                        <p class='text-red-600 mt-2'>Recommendation: Consult a neurologist for further evaluation</p>
-                    </div>` : 
-                    `<div class='bg-green-100 border-l-4 border-green-500 p-4'>
-                        <p class='text-green-700 font-bold'>No Significant Dementia Risk</p>
-                        <p class='text-green-600 mt-2'>Continue regular health monitoring</p>
-                    </div>`;
-                resultDiv.innerHTML = output;
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                var resultDiv = document.getElementById("result");
-                resultDiv.innerHTML = '<p class="text-red-500 bg-red-100 p-4 rounded">Error processing assessment</p>';
-            });
+    // Simulated API call (replace with actual endpoint)
+    fetch('/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        var resultDiv = document.getElementById("result");
+        var output = data.prediction === 0 ? 
+            `<div class='bg-red-100 border-l-4 border-red-500 p-4'>
+                <p class='text-red-700 font-bold'>Dementia Detected</p>
+                <p class='text-red-600 mt-2'>Recommendation: Consult a neurologist for further evaluation</p>
+            </div>` : 
+            `<div class='bg-green-100 border-l-4 border-green-500 p-4'>
+                <p class='text-green-700 font-bold'>No Dementia Detected</p>
+                <p class='text-green-600 mt-2'>Continue regular health monitoring</p>
+            </div>`;
+
+        // Add probability information if available
+        if (data.probabilities) {
+            output += `<div class='mt-4 text-sm text-gray-700'>
+                <p>Confidence Levels:</p>
+                <p>Probability of Dementia: ${(data.probabilities[0] * 100).toFixed(1)}%</p>
+                <p>Probability of No Dementia: ${(data.probabilities[1] * 100).toFixed(1)}%</p>
+            </div>`;
         }
+        
+        resultDiv.innerHTML = output;
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        var resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = '<p class="text-red-500 bg-red-100 p-4 rounded">Error processing assessment. Please check all inputs and try again.</p>';
+    });
+}
 
-        function checkFormFields() {
-            var name = document.getElementById("name").value;
-            var gender = document.getElementById("gender").value;
-            var age = document.getElementById("age").value;
-            var educ = document.getElementById("educ").value;
-            var ses = document.getElementById("ses").value;
-            var mmse = document.getElementById("mmse").value;
-            var etiv = document.getElementById("etiv").value;
-            var nwbv = document.getElementById("nwbv").value;
-            var asf = document.getElementById("asf").value;
-            var apoe4 = document.getElementById("apoe4").value;
-            var familyHistory = document.getElementById("familyHistory").value;
+function checkFormFields() {
+    var name = document.getElementById("name").value;
+    var gender = document.getElementById("gender").value;
+    var age = document.getElementById("age").value;
+    var educ = document.getElementById("educ").value;
+    var ses = document.getElementById("ses").value;
+    var mmse = document.getElementById("mmse").value;
+    var etiv = document.getElementById("etiv").value;
+    var nwbv = document.getElementById("nwbv").value;
+    var asf = document.getElementById("asf").value;
+    var apoe4 = document.getElementById("apoe4").value;
+    var familyHistory = document.getElementById("familyHistory").value;
+    var cdr = document.getElementById("cdr").value;
 
-            var allFieldsFilled = name && gender && age && educ && ses && mmse && etiv && nwbv && asf && apoe4 && familyHistory;
+    // Additional validation
+    var validAge = age > 0 && age < 120;
+    var validMMSE = mmse >= 0 && mmse <= 30;
+    var validSES = ses >= 1 && ses <= 5;
 
-            document.getElementById("submitBtn").disabled = !allFieldsFilled;
-        }
+    var allFieldsFilled = name && gender && age && educ && ses && mmse && etiv && nwbv && asf && apoe4 && familyHistory && cdr;
 
-        // Prevent default form submission
-        document.getElementById("dementiaForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-        });
+    document.getElementById("submitBtn").disabled = !(allFieldsFilled && validAge && validMMSE && validSES);
+}
+
+// Prevent default form submission
+document.getElementById("dementiaForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+});
+
+// Add input event listener for form fields
+document.getElementById("dementiaForm").addEventListener("input", checkFormFields);
     </script>
 </body>
 </html>

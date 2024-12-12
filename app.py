@@ -78,7 +78,7 @@ def page_one():
 
 @app.route('/index')
 def page_two():
-    return render_template('index.html')
+    return render_template('scan.html')
 
 @app.route('/3')
 def page_three():

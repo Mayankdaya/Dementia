@@ -212,7 +212,7 @@
                 <!-- Right Side - Image -->
                 <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out transform hover:-translate-y-2">
                     <img 
-                        src="/asset/16x9_background_image_for__HealthCare.png"
+                        src="/static/16x9_HealthCare___Detection_of_Dement.png"
                         alt="AI Technology"
                         class="w-full h-96 object-cover transition-transform duration-300 ease-in-out transform hover:scale-105"
                     />
@@ -330,7 +330,7 @@
                 <button  id="scan" class="bg-white text-blue-600 px-10 py-4 rounded-full text-lg font-semibold hover:bg-blue-50 transition neumorphic-shadow">
                     Start Assessment
                 </button>
-                <button id="learn" class="border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-blue-700 transition">
+                <button id="foot" class="border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-blue-700 transition">
                     Learn More
                 </button>
             </div>
@@ -348,20 +348,24 @@
         // Add event listeners for redirection
         document.getElementById('getStartedBtn').addEventListener('click', function() {
             // This can be replaced with Flask route in the backend
-            window.location.href = '/1'; // Redirects to 1.html or Flask route
+            window.location.href = './templates/1'; // Redirects to 1.html or Flask route
         });
 
         document.getElementById('exploreSolutionBtn').addEventListener('click', function() {
             // This can be replaced with Flask route in the backend
-            window.location.href = '/1'; // Redirects to 1.html or Flask route
+            window.location.href = './templates/1'; // Redirects to 1.html or Flask route
         });
         document.getElementById('scan').addEventListener('click', function() {
             // This can be replaced with Flask route in the backend
-            window.location.href = '/index'; // Redirects to 1.html or Flask route
+            window.location.href = './templates/index'; // Redirects to 1.html or Flask route
         });
         document.getElementById('learn').addEventListener('click', function() {
             // This can be replaced with Flask route in the backend
-            window.location.href = '/learn'; // Redirects to 1.html or Flask route
+            window.location.href = './templates/learn'; // Redirects to 1.html or Flask route
+        });
+        document.getElementById('foot').addEventListener('click', function() {
+            // This can be replaced with Flask route in the backend
+            window.location.href = './templates/learn'; // Redirects to 1.html or Flask route
         });
     </script>
 </body>
