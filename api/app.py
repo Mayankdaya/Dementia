@@ -11,6 +11,7 @@ import os
 model_path = os.path.join(os.path.dirname(__file__), 'random_forest_model.joblib')
 model = joblib.load(model_path)
 
+
 print('Classes:', model.classes_)
 
 def categorize_mmse(mmse):
@@ -43,10 +44,6 @@ def create_app():
     def page_one():
         return render_template('1.html')
 
-    @app.route('/index')
-    def page_two():
-        return render_template('scan.html')
-
     @app.route('/3')
     def page_three():
         return render_template('3.html')
@@ -54,6 +51,10 @@ def create_app():
     @app.route('/learn')
     def page_four():
         return render_template('learn.html')
+    @app.route('/scan')
+    
+    def page_five():
+        return render_template('scan.html')
 
     @app.route('/predict', methods=['POST'])
     def predict():
@@ -118,4 +119,4 @@ app = create_app()
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='127.0.0.1', port=port, debug=True)

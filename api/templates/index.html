@@ -210,12 +210,10 @@
                 </div>
     
                 <!-- Right Side - Image -->
-                <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out transform hover:-translate-y-2">
-                    <img 
-                        src="/static/16x9_HealthCare___Detection_of_Dement.png"
-                        alt="AI Technology"
-                        class="w-full h-96 object-cover transition-transform duration-300 ease-in-out transform hover:scale-105"
-                    />
+                <div class="rounded-xl overflow-hidden shadow-lg bg-gray-200 w-72 h-72 flex items-center justify-center transition-transform transform hover:scale-105 hover:shadow-2xl">
+                    <p class="text-gray-700 font-bold text-4xl uppercase transition-transform transform hover:scale-110">
+                        AI Tech
+                    </p>
                 </div>
     
             </div>
@@ -357,7 +355,7 @@
         });
         document.getElementById('scan').addEventListener('click', function() {
             // This can be replaced with Flask route in the backend
-            window.location.href = './index'; // Redirects to 1.html or Flask route
+            window.location.href = './scan'; // Redirects to 1.html or Flask route
         });
         document.getElementById('learn').addEventListener('click', function() {
             // This can be replaced with Flask route in the backend
@@ -365,7 +363,7 @@
         });
         document.getElementById('foot').addEventListener('click', function() {
             // This can be replaced with Flask route in the backend
-            window.location.href = './/learn'; // Redirects to 1.html or Flask route
+            window.location.href = './learn'; // Redirects to 1.html or Flask route
         });
     </script>
 </body>

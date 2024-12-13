@@ -66,7 +66,7 @@
                     <a id="data" class="bg-neugray text-blue-600 px-8 py-3 rounded-full text-lg font-semibold shadow-neu transition-neu hover-neu">
                         Data Description
                     </a>
-                    <a  id="exploreSolutionBtn" href="#" class="bg-neugray text-blue-600 px-8 py-3 rounded-full text-lg font-semibold shadow-neu transition-neu hover-neu">
+                    <a  id="scan" href="#" class="bg-neugray text-blue-600 px-8 py-3 rounded-full text-lg font-semibold shadow-neu transition-neu hover-neu">
                         Dementia Detection
                     </a>
                 </div>
@@ -82,13 +82,13 @@
     </footer>
     <script>
         // Add event listeners for redirection
-        document.getElementById('exploreSolutionBtn').addEventListener('click', function() {
+        document.getElementById('scan').addEventListener('click', function() {
             // This can be replaced with Flask route in the backend
-            window.location.href = '/scan.html'; // Redirects to 1.html or Flask route
+            window.location.href = './scan'; // Redirects to 1.html or Flask route
         });
         document.getElementById('data').addEventListener('click', function() {
             // This can be replaced with Flask route in the backend
-            window.location.href = '/3.html'; // Redirects to 1.html or Flask route
+            window.location.href = '/3'; // Redirects to 1.html or Flask route
         });
 
     </script>
